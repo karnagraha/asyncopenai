@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asyncopenai"
+version = "0.0.1"
+authors = [
+    { name="karnagraha", email="karnagraha@protonmail.com" },
+]
+description = "Basic openai API functionality with asyncio."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Framework :: AsyncIO",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/karnagraha/asyncopenai"
+"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
