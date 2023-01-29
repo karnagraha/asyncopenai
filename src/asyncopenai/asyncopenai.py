@@ -1,7 +1,7 @@
 # an Async library for openai
 
 import aiohttp
-import asyncio.exceptions
+import asyncio
 import functools
 import json
 
@@ -33,7 +33,7 @@ async def openai_request(method, url, params=None, headers=None):
         return await request(method, url, params, headers)
     except (
         aiohttp.ClientError,
-        asyncio.exceptions.TimeoutError,
+        asyncio.TimeoutError,
     ) as e:
         raise OpenAIException(f"exception during request: {e}")
 
