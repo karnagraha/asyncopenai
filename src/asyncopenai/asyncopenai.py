@@ -1,8 +1,13 @@
 # an Async library for openai
 
 import aiohttp
+import asyncio.exceptions
 import functools
 import json
+
+
+class OpenAIException(Exception):
+    pass
 
 
 @functools.lru_cache(maxsize=None)
@@ -24,7 +29,13 @@ async def request(method, url, json=None, headers=None):
 
 async def openai_request(method, url, params=None, headers=None):
     headers["Authorization"] = "Bearer " + get_api_key()
-    return await request(method, url, params, headers)
+    try:
+        return await request(method, url, params, headers)
+    except (
+        aiohttp.ClientError,
+        asyncio.exceptions.TimeoutError,
+    ) as e:
+        raise OpenAIException(f"exception during request: {e}")
 
 
 async def list_models():
@@ -57,11 +68,7 @@ async def create_completion(
         "frequency_penalty": frequency_penalty,
         "presence_penalty": presence_penalty,
     }
-    try:
-        r = await openai_request("POST", url, json, headers)
-    except aiohttp.client_exceptions.ContentTypeError:
-        return None
-    return r
+    return await openai_request("POST", url, json, headers)
 
 
 async def create_embedding(text, model="text-embedding-ada-002"):
@@ -71,11 +78,4 @@ async def create_embedding(text, model="text-embedding-ada-002"):
         "input": text,
         "model": model,
     }
-    try:
-        r = await openai_request("POST", url, json, headers)
-    except (
-        aiohttp.client_exceptions.ContentTypeError,
-        aiohttp.client_exceptions.ClientConnectorError,
-    ):
-        return None
-    return r
+    return await openai_request("POST", url, json, headers)
