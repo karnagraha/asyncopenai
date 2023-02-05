@@ -6,7 +6,7 @@ import functools
 import json
 
 
-class OpenAIException(Exception):
+class OpenAIError(Exception):
     pass
 
 
@@ -35,7 +35,7 @@ async def openai_request(method, url, params=None, headers=None):
         aiohttp.ClientError,
         asyncio.TimeoutError,
     ) as e:
-        raise OpenAIException(f"exception during request: {e}")
+        raise OpenAIError(f"exception during request: {e}")
 
 
 async def list_models():
