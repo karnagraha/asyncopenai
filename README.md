@@ -1,5 +1,3 @@
-# asyncopenai
+This is deprecated.  openai now has async support.
 
-Python module to call openai async.
-
-Minimal coverage of openai methods, but should work fine.  PRs welcome.
+https://github.com/openai/openai-python#async-api
